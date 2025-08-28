@@ -1,86 +1,27 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const cake = document.querySelector(".cake");
-  const candleCountDisplay = document.getElementById("candleCount");
-  let candles = [];
-  let audioContext;
-  let analyser;
-  let microphone;
+// Select the cake and message container
+const cake = document.querySelector(".cake");
+const message = document.getElementById("message");
 
-  function updateCandleCount() {
-    const activeCandles = candles.filter(
-      (candle) => !candle.classList.contains("out")
-    ).length;
-    candleCountDisplay.textContent = activeCandles;
-  }
+// Create 18 candles
+for (let i = 0; i < 18; i++) {
+  let candle = document.createElement("div");
+  candle.classList.add("candle");
 
-  function addCandle(left, top) {
-    const candle = document.createElement("div");
-    candle.className = "candle";
-    candle.style.left = left + "px";
-    candle.style.top = top + "px";
+  let flame = document.createElement("div");
+  flame.classList.add("flame");
 
-    const flame = document.createElement("div");
-    flame.className = "flame";
-    candle.appendChild(flame);
+  candle.appendChild(flame);
+  cake.appendChild(candle);
+}
 
-    cake.appendChild(candle);
-    candles.push(candle);
-    updateCandleCount();
-  }
+// Microphone setup for blowing detection
+navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const analyser = audioContext.createAnalyser();
+  const source = audioContext.createMediaStreamSource(stream);
+  source.connect(analyser);
 
-  cake.addEventListener("click", function (event) {
-    const rect = cake.getBoundingClientRect();
-    const left = event.clientX - rect.left;
-    const top = event.clientY - rect.top;
-    addCandle(left, top);
-  });
+  const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-  function isBlowing() {
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-    analyser.getByteFrequencyData(dataArray);
-
-    let sum = 0;
-    for (let i = 0; i < bufferLength; i++) {
-      sum += dataArray[i];
-    }
-    let average = sum / bufferLength;
-
-    return average > 40; //
-  }
-
-  function blowOutCandles() {
-    let blownOut = 0;
-
-    if (isBlowing()) {
-      candles.forEach((candle) => {
-        if (!candle.classList.contains("out") && Math.random() > 0.5) {
-          candle.classList.add("out");
-          blownOut++;
-        }
-      });
-    }
-
-    if (blownOut > 0) {
-      updateCandleCount();
-    }
-  }
-
-  if (navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices
-      .getUserMedia({ audio: true })
-      .then(function (stream) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioContext.createAnalyser();
-        microphone = audioContext.createMediaStreamSource(stream);
-        microphone.connect(analyser);
-        analyser.fftSize = 256;
-        setInterval(blowOutCandles, 200);
-      })
-      .catch(function (err) {
-        console.log("Unable to access microphone: " + err);
-      });
-  } else {
-    console.log("getUserMedia not supported on your browser!");
-  }
-});
+  function detectBlow() {
+    analyser.getByteFreq
