@@ -1,86 +1,46 @@
-/* General reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* Center everything */
 body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to right, #ffecd2, #fcb69f);
+  background: #f8e6d0; /* light background like a party vibe */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  overflow: hidden;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
-/* Cake container */
-.cake {
+/* Cake Base */
+#cake {
   position: relative;
-  width: 200px;
-  height: 150px;
-  background: #ff69b4;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  width: 300px;
+  height: 200px;
+  background: linear-gradient(to bottom, #4b2c20, #2e1a12); /* chocolate shades */
+  border-radius: 50% / 20%; /* roundish cake */
+  margin: 40px auto;
+  box-shadow: inset 0 -20px 40px rgba(0, 0, 0, 0.5), 
+              0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* Plate */
-.plate {
+/* Frosting top */
+#cake::before {
+  content: "";
   position: absolute;
-  bottom: -20px;
-  left: -20px;
-  width: 240px;
+  top: -20px;
+  left: 0;
+  width: 100%;
   height: 40px;
-  background: #fff;
+  background: radial-gradient(circle at 50% 20%, #5c2a1d, #2e1a12);
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 /* Candles */
 .candle {
-  position: absolute;
-  bottom: 100%;
   width: 10px;
   height: 40px;
   background: #fff;
+  position: absolute;
+  bottom: 100%;
   border-radius: 3px;
 }
 
-.candle:nth-child(1) { left: 40px; }
-.candle:nth-child(2) { left: 90px; }
-.candle:nth-child(3) { left: 140px; }
-
-/* Flame */
-.flame {
-  position: absolute;
-  top: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 10px;
-  height: 15px;
-  background: radial-gradient(circle, #ffeb3b 40%, #ff9800 100%);
-  border-radius: 50%;
-  animation: flicker 0.15s infinite alternate;
-}
-
-@keyframes flicker {
-  from { transform: translateX(-50%) scale(1); }
-  to { transform: translateX(-50%) scale(1.1); }
-}
-
-/* Hidden flames when blown */
-.hidden {
-  display: none;
-}
-
-/* Message */
-.message {
-  position: absolute;
-  bottom: -60px;
-  width: 100%;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  color: #444;
-}
+/* Candle colors (optional stripes) */
