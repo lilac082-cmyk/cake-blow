@@ -4,68 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Birthday Cake 🎂</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: pink;
-      margin: 0;
-      flex-direction: column;
-    }
-    .cake {
-      position: relative;
-      width: 300px;
-      height: 200px;
-      background: #fddde6;
-      border-radius: 0 0 30px 30px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-    }
-    .candle {
-      position: absolute;
-      bottom: 200px;
-      width: 10px;
-      height: 40px;
-      background: yellow;
-      border-radius: 3px;
-    }
-    .flame {
-      position: absolute;
-      top: -15px;
-      left: -3px;
-      width: 16px;
-      height: 16px;
-      background: orange;
-      border-radius: 50%;
-      animation: flicker 0.3s infinite;
-    }
-    @keyframes flicker {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.2); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <h1 style="text-align:center; margin-top:20px;">🎉 Blow Out the Candles 🎉</h1>
+  
+  <!-- Cake container -->
   <div class="cake" id="cake"></div>
 
-  <script>
-    const cake = document.getElementById("cake");
-    const candles = 18; // number of candles
-    const spacing = 300 / (candles + 1);
-
-    for (let i = 0; i < candles; i++) {
-      let candle = document.createElement("div");
-      candle.classList.add("candle");
-      candle.style.left = (spacing * (i + 1) - 5) + "px";
-
-      let flame = document.createElement("div");
-      flame.classList.add("flame");
-
-      candle.appendChild(flame);
-      cake.appendChild(candle);
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+
